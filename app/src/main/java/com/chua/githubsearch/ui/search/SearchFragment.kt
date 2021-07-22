@@ -1,12 +1,13 @@
 package com.chua.githubsearch.ui.search
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chua.githubsearch.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +18,10 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val searchViewModel: SearchViewModel by viewModels()
+
+    private val searchAdapter = SearchAdapter { url ->
+        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToWebFragment(url))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +34,21 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //TODO: get string from edit text
-        searchViewModel.search("budget")
+        binding.apply {
+            searchRecyclerView.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = searchAdapter
+            }
 
-        //TODO: display items in recyclerview
-        searchViewModel.items.observe(viewLifecycleOwner) { items ->
-            Log.d("search", items.size.toString())
-
-            for (item in items) {
-                Log.d("search", item.full_name)
+            searchButton.setOnClickListener {
+                searchViewModel.search(searchEditText.text.toString())
             }
         }
+
+        searchViewModel.items.observe(viewLifecycleOwner) { items ->
+            searchAdapter.updateItems(items)
+        }
+
     }
 
     override fun onDestroy() {
