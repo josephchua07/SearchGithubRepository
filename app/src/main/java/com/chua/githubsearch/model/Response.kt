@@ -1,6 +1,6 @@
 package com.chua.githubsearch.model
 
-data class Response(
-    val total_count: Int,
-    val items: List<Item>
-)
+sealed class Response<out T> {
+    data class Success<out T>(val data: T) : Response<T>()
+    data class GenericError(val message: String) : Response<Nothing>()
+}

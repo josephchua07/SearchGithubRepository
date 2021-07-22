@@ -12,7 +12,7 @@ class SearchAdapter(
 
     private var items: MutableList<Item> = mutableListOf()
 
-    fun updateItems(items: List<Item>) {
+    fun updateItems(items: List<Item> = emptyList()) {
         this.items = items.toMutableList()
         notifyDataSetChanged()
     }
