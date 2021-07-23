@@ -44,7 +44,12 @@ class SearchFragment : Fragment() {
             }
 
             searchButton.setOnClickListener {
+                searchViewModel.reset()
                 searchViewModel.search(searchEditText.text.toString())
+            }
+
+            loadMore.setOnClickListener {
+                searchViewModel.loadMore()
             }
         }
 
@@ -59,19 +64,19 @@ class SearchFragment : Fragment() {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                 }
                 is Status.Success -> {
-                    showLoading(false)
+                    showLoading(false, loadMore = true)
                     searchAdapter.updateItems(it.data)
                 }
             }
-
 
         }
 
     }
 
-    private fun showLoading(loading: Boolean) {
+    private fun showLoading(loading: Boolean, loadMore: Boolean = false) {
         binding.searchProgressBar.isVisible = loading
         binding.searchButton.isEnabled = !loading
+        binding.loadMore.isVisible = loadMore
     }
 
     override fun onDestroy() {

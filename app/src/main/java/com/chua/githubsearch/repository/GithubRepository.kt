@@ -5,6 +5,6 @@ import com.chua.githubsearch.model.Response
 
 interface GithubRepository {
 
-    suspend fun search(string: String): Response<List<Item>>
+    suspend fun search(string: String, page: Int): Response<List<Item>>
 
 }
