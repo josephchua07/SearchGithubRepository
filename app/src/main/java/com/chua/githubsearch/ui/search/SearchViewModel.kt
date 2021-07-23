@@ -27,10 +27,7 @@ class SearchViewModel @Inject constructor(
 
     fun search(
         searchString: String,
-        page: Int = 1,
-        successAction: (List<Item>) -> Unit = { items ->
-            _status.postValue(Status.Success(items))
-        }
+        page: Int = 1
     ) {
         this.searchString = searchString
         viewModelScope.launch {
@@ -38,7 +35,7 @@ class SearchViewModel @Inject constructor(
             when (val response = githubRepository.search(searchString, page)) {
                 is Response.Success -> {
                     items.addAll(response.data.toMutableList())
-                    successAction(items)
+                    _status.postValue(Status.Success(items))
                 }
                 is Response.GenericError -> {
                     _status.postValue(Status.Error(response.message))
