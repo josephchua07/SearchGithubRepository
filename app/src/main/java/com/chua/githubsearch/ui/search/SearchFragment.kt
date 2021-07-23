@@ -43,7 +43,7 @@ class SearchFragment : Fragment() {
                 adapter = searchAdapter
             }
 
-            searchButton.setOnClickListener {
+            textField.setEndIconOnClickListener {
                 searchViewModel.reset()
                 searchViewModel.search(searchEditText.text.toString())
             }
@@ -75,7 +75,7 @@ class SearchFragment : Fragment() {
 
     private fun showLoading(loading: Boolean, loadMore: Boolean = false) {
         binding.searchProgressBar.isVisible = loading
-        binding.searchButton.isEnabled = !loading
+        binding.textField.isEndIconVisible = !loading
         binding.loadMore.isVisible = loadMore
     }
 
