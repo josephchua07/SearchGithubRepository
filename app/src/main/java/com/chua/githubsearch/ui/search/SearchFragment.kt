@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chua.githubsearch.databinding.FragmentSearchBinding
-import com.chua.githubsearch.model.Status
+import com.chua.githubsearch.network.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

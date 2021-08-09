@@ -1,6 +1,6 @@
 package com.chua.githubsearch.service
 
-import com.chua.githubsearch.model.SearchResult
+import com.chua.githubsearch.network.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,6 +11,6 @@ interface GithubService {
         @Query("q") string: String,
         @Query("per_page") per_page: Int = 10,
         @Query("page") page: Int
-    ): SearchResult
+    ): SearchResponse
 
 }
