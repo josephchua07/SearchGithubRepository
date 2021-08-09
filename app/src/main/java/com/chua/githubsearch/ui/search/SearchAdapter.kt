@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chua.githubsearch.databinding.ItemBinding
-import com.chua.githubsearch.model.Item
+import com.chua.githubsearch.domain.Item
 
 class SearchAdapter(
     private val navigate: (String) -> Unit
@@ -23,12 +23,12 @@ class SearchAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item) {
             binding.apply {
-                fullName.text = item.full_name
+                fullName.text = item.fullName
                 description.text = item.description
-                stargazersCount.text = "Stars: ${item.stargazers_count}"
-                updatedAt.text = "Updated: ${item.updated_at}"
+                stargazersCount.text = "Stars: ${item.stars}"
+                updatedAt.text = "Updated: ${item.lastUpdate}"
                 root.setOnClickListener {
-                    navigate(URL + item.full_name)
+                    navigate(URL + item.fullName)
                 }
             }
         }

@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.chua.githubsearch.model.Item
-import com.chua.githubsearch.model.Response
-import com.chua.githubsearch.model.Status
+import com.chua.githubsearch.domain.Item
+import com.chua.githubsearch.network.Response
+import com.chua.githubsearch.network.Status
 import com.chua.githubsearch.repository.GithubRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,8 +17,8 @@ class SearchViewModel @Inject constructor(
     private val githubRepository: GithubRepository
 ) : ViewModel() {
 
-    private val _status = MutableLiveData<Status>()
-    val status: LiveData<Status>
+    private val _status = MutableLiveData<Status<Item>>()
+    val status: LiveData<Status<Item>>
         get() = _status
 
     private var items = mutableListOf<Item>()

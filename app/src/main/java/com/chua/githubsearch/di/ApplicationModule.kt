@@ -1,9 +1,13 @@
 package com.chua.githubsearch.di
 
 import com.chua.githubsearch.BuildConfig
+import com.chua.githubsearch.domain.Item
+import com.chua.githubsearch.network.ItemDto
 import com.chua.githubsearch.repository.GithubRepository
 import com.chua.githubsearch.repository.GithubRepositoryImpl
 import com.chua.githubsearch.service.GithubService
+import com.chua.githubsearch.util.DomainMapper
+import com.chua.githubsearch.util.ItemMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +23,7 @@ import javax.inject.Singleton
 class ApplicationModule {
 
     @Provides
+    @Singleton
     fun provideBaseUrl() = BuildConfig.BASE_URL
 
     @Provides
@@ -47,8 +52,15 @@ class ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideGithubRepository(githubService: GithubService): GithubRepository =
-        GithubRepositoryImpl(githubService)
+    fun provideItemMapper(): DomainMapper<ItemDto, Item> = ItemMapper()
+
+    @Provides
+    @Singleton
+    fun provideGithubRepository(
+        githubService: GithubService,
+        itemMapper: DomainMapper<ItemDto, Item>
+    ): GithubRepository =
+        GithubRepositoryImpl(githubService, itemMapper)
 
 
 }

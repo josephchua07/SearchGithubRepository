@@ -1,7 +1,7 @@
 package com.chua.githubsearch.repository
 
-import com.chua.githubsearch.model.Item
-import com.chua.githubsearch.model.Response
+import com.chua.githubsearch.domain.Item
+import com.chua.githubsearch.network.Response
 
 interface GithubRepository {
 
